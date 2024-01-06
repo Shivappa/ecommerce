@@ -1,6 +1,7 @@
 package com.techloom.EcomProductService.service;
 
 import com.techloom.EcomProductService.dto.ProductListResponseDTO;
+import com.techloom.EcomProductService.dto.ProductRequestDTO;
 import com.techloom.EcomProductService.dto.ProductResponseDTO;
 import com.techloom.EcomProductService.model.Product;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product createProduct(Product product) {
+    public ProductResponseDTO createProduct(ProductRequestDTO product) {
         return null;
     }
 
@@ -30,7 +31,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Product deleteProduct(int id) {
-        return null;
+    public boolean deleteProduct(int id) {
+        return false;
     }
 }

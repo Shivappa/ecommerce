@@ -1,6 +1,7 @@
 package com.techloom.EcomProductService.service;
 
 import com.techloom.EcomProductService.dto.ProductListResponseDTO;
+import com.techloom.EcomProductService.dto.ProductRequestDTO;
 import com.techloom.EcomProductService.dto.ProductResponseDTO;
 import com.techloom.EcomProductService.model.Product;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -22,13 +23,15 @@ public class FakeStoreProductImpl implements ProductService{
     @Override
     public ProductListResponseDTO getAllProducts() {
 
-//        String getProductsURL = "https://fakestoreapi.com/products";
-//        RestTemplate restTemplate = restTemplateBuilder.build();
-//        ResponseEntity<ProductListResponseDTO> productResponse =
-//                restTemplate.getForEntity(getProductsURL, ProductListResponseDTO.class);
-//        return  productResponse.getBody();
-        return null;
-
+        String getProductsURL = "https://fakestoreapi.com/products";
+        RestTemplate restTemplate = restTemplateBuilder.build();
+        ResponseEntity<ProductResponseDTO[]> productResponseArray =
+                restTemplate.getForEntity(getProductsURL, ProductResponseDTO[].class);
+        ProductListResponseDTO productListResponseDTO = new ProductListResponseDTO();
+        for(ProductResponseDTO productResponseDTO : productResponseArray.getBody()) {
+            productListResponseDTO.getProducts().add(productResponseDTO);
+        }
+        return  productListResponseDTO;
     }
 
     @Override
@@ -41,8 +44,12 @@ public class FakeStoreProductImpl implements ProductService{
     }
 
     @Override
-    public Product createProduct(Product product) {
-        return null;
+    public ProductResponseDTO createProduct(ProductRequestDTO productRequestDTO) {
+        String createProductURL = "https://fakestoreapi.com/products/";
+        RestTemplate restTemplate = restTemplateBuilder.build();
+        ResponseEntity<ProductResponseDTO> response  =
+                restTemplate.postForEntity(createProductURL, productRequestDTO, ProductResponseDTO.class);
+        return response.getBody();
     }
 
     @Override
@@ -51,7 +58,11 @@ public class FakeStoreProductImpl implements ProductService{
     }
 
     @Override
-    public Product deleteProduct(int id) {
-        return null;
+    public boolean deleteProduct(int id) {
+
+        String deleteProductURL = "https://fakestoreapi.com/products/" + id;
+        RestTemplate restTemplate = restTemplateBuilder.build();
+        restTemplate.delete(deleteProductURL);
+        return true;
     }
 }

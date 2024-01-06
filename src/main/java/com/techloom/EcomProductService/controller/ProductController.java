@@ -1,12 +1,17 @@
 package com.techloom.EcomProductService.controller;
 
 import com.techloom.EcomProductService.dto.ProductListResponseDTO;
+import com.techloom.EcomProductService.dto.ProductRequestDTO;
 import com.techloom.EcomProductService.dto.ProductResponseDTO;
 import com.techloom.EcomProductService.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -16,17 +21,25 @@ import java.util.List;
 @RestController
 public class ProductController {
 
+    private final ProductService productService;
 
+    @Autowired
+    public ProductController(@Qualifier("fakeStoreProductService") ProductService productService) {
+        this.productService = productService;
+    }
+
+    /** Field Injection
     @Autowired
     @Qualifier("fakeStoreProductService")
     private ProductService productService;
+    ...*/
 
     @GetMapping("/products")
     public ResponseEntity getAllProducts(){
 
         ProductListResponseDTO productListResponseDTO = productService.getAllProducts();
         return ResponseEntity.ok(productListResponseDTO);
-        /*
+        /**
         ProductResponseDTO productResponseDTO = new ProductResponseDTO();
         productResponseDTO.setId(1);
         productResponseDTO.setTitle("iPhone 15");
@@ -46,15 +59,26 @@ public class ProductController {
         List<ProductResponseDTO> productResponseDTOList = Arrays.asList(productResponseDTO, productResponseDTO1);
         return ResponseEntity.ok(productResponseDTOList);
 
-         */
+         ...*/
 
     }
 
-    @GetMapping("/products/1")
-    public ResponseEntity getProductById() {
-        ProductResponseDTO productResponseDTO = productService.getProductById(1);
+    @GetMapping("/products/{id}")
+    public ResponseEntity getProductById(@PathVariable("id") int id) {
+        ProductResponseDTO productResponseDTO = productService.getProductById(id);
         return ResponseEntity.ok(productResponseDTO);
+    }
 
+    @PostMapping("/products")
+    public ResponseEntity createProduct(@RequestBody ProductRequestDTO productRequestDTO) {
+        ProductResponseDTO productResponseDTO = productService.createProduct(productRequestDTO);
+        return ResponseEntity.ok(productResponseDTO);
+    }
+
+    @DeleteMapping("/products/{id}")
+    public ResponseEntity deleteProductById(@PathVariable("id") int id) {
+        boolean response = productService.deleteProduct(id);
+        return ResponseEntity.ok(response);
     }
 
 
