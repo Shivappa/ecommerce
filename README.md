@@ -16,3 +16,8 @@ This is the ecommerce product service
 - CRUD APIs: getProduct(id), getProducts(), createProduct()
 - Updated the service layer for new APIs
 - Wrote a small controller advice
+
+[Building API-4]
+- Calling 3rd party APIClient (fakeStoreClient)
+- Repo -> Service -> Controller
+- Client -> Service -> Controller

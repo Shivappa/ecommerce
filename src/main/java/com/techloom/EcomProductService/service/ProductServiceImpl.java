@@ -1,5 +1,6 @@
 package com.techloom.EcomProductService.service;
 
+import com.techloom.EcomProductService.dto.FakeStoreProductRequestDTO;
 import com.techloom.EcomProductService.dto.ProductListResponseDTO;
 import com.techloom.EcomProductService.dto.ProductRequestDTO;
 import com.techloom.EcomProductService.dto.ProductResponseDTO;

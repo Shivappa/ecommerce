@@ -1,5 +1,7 @@
 package com.techloom.EcomProductService.controllerAdvice;
 
+import com.techloom.EcomProductService.Exception.ProductNotFoudException;
+import com.techloom.EcomProductService.dto.ErrorResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -12,10 +14,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class GlobalControllerAdvice {
 
-    @ExceptionHandler(value = NullPointerException.class)
-    public ResponseEntity<String> handleNullPointerException(Exception ex) {
-        String exceptionResponse =
-                "error : " + ex.getMessage() + ", code : " + HttpStatus.INTERNAL_SERVER_ERROR;
-        return ResponseEntity.ok(exceptionResponse);
+    @ExceptionHandler(value = ProductNotFoudException.class)
+    public ResponseEntity<ErrorResponseDTO> handleProductNotFoundException(Exception ex) {
+        ErrorResponseDTO errorResponseDTO = new ErrorResponseDTO();
+        errorResponseDTO.setMessage(ex.getMessage());
+        errorResponseDTO.setMessageCode(404);
+        return new ResponseEntity<>(errorResponseDTO, HttpStatus.NOT_FOUND);
     }
 }

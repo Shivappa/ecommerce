@@ -1,8 +1,12 @@
 package com.techloom.EcomProductService.controller;
 
+import com.techloom.EcomProductService.Exception.ProductNotFoudException;
+import com.techloom.EcomProductService.dto.FakeStoreProductRequestDTO;
+import com.techloom.EcomProductService.dto.FakeStoreProductResponseDTO;
 import com.techloom.EcomProductService.dto.ProductListResponseDTO;
 import com.techloom.EcomProductService.dto.ProductRequestDTO;
 import com.techloom.EcomProductService.dto.ProductResponseDTO;
+import com.techloom.EcomProductService.mapper.ProductMapper;
 import com.techloom.EcomProductService.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -64,14 +68,15 @@ public class ProductController {
     }
 
     @GetMapping("/products/{id}")
-    public ResponseEntity getProductById(@PathVariable("id") int id) {
+    public ResponseEntity getProductById(@PathVariable("id") int id) throws ProductNotFoudException {
         ProductResponseDTO productResponseDTO = productService.getProductById(id);
         return ResponseEntity.ok(productResponseDTO);
     }
 
     @PostMapping("/products")
     public ResponseEntity createProduct(@RequestBody ProductRequestDTO productRequestDTO) {
-        ProductResponseDTO productResponseDTO = productService.createProduct(productRequestDTO);
+        ProductResponseDTO productResponseDTO =
+                productService.createProduct(productRequestDTO);
         return ResponseEntity.ok(productResponseDTO);
     }
 
