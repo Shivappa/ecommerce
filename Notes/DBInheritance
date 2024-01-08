@@ -1,0 +1,2 @@
+1. MappedSuperClass -> no table for parent class, but individual for each child class.
+ Child class gets attributes from parent, and they become columns in child class table.
