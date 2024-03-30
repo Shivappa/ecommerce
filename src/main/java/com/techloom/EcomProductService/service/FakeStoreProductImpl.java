@@ -9,16 +9,13 @@ import com.techloom.EcomProductService.dto.ProductRequestDTO;
 import com.techloom.EcomProductService.dto.ProductResponseDTO;
 import com.techloom.EcomProductService.model.Product;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 // static imports the method and we can use the method name directly
 import static com.techloom.EcomProductService.mapper.ProductMapper.FakeStoreResponseToProductResponse;
 import static com.techloom.EcomProductService.mapper.ProductMapper.productRequestToFakeStoreRequest;
 import static com.techloom.EcomProductService.util.ProductUtils.isNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service("fakeStoreProductService")
