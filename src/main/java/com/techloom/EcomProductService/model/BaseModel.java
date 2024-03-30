@@ -16,8 +16,8 @@ import java.util.UUID;
 public class BaseModel {
     @Id
     @GeneratedValue(generator = "uuidGenerator")
-//    @GenericGenerator(name = "uuidGenerator", strategy = "uuid2") strategy is deprecated
-    @GenericGenerator(name = "uuidGenerator")
+    @GenericGenerator(name = "uuidGenerator", strategy = "uuid2") //strategy is deprecated
+//    @GenericGenerator(name = "uuidGenerator")
     @Column(name = "id", nullable = false, updatable = false)
     private UUID id;
 }
