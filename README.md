@@ -1,4 +1,4 @@
-This is the ecommerce product service
+This is the Ecommerce Product service
 
 [Building API-2] Call to fake store product using restTempalte to get the single product
 
