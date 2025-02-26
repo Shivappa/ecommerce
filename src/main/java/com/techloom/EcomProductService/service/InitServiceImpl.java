@@ -1,5 +1,8 @@
 package com.techloom.EcomProductService.service;
 
+import com.techloom.EcomProductService.demo.Author;
+import com.techloom.EcomProductService.demo.AuthorRepo;
+import com.techloom.EcomProductService.demo.Book;
 import com.techloom.EcomProductService.model.Category;
 import com.techloom.EcomProductService.model.Order;
 import com.techloom.EcomProductService.model.Price;
@@ -19,6 +22,7 @@ public class InitServiceImpl implements InitService {
     private PriceRepository priceRepository;
     private ProductRepository productRepository;
     private OrderRepository orderRepository;
+    private AuthorRepo authorRepo;
 
     public InitServiceImpl(CategoryRepository categoryRepository,
                            PriceRepository priceRepository,
@@ -85,5 +89,18 @@ public class InitServiceImpl implements InitService {
         order.setProducts(List.of(productIphone, productMacbook, productIpad));
 
         order = orderRepository.save(order);
+
+        Author author = new Author("Ashok Kumar", null);
+
+        Book book1 = new Book("Book1", author);
+        Book book2 = new Book("Book2", author);
+        Book book3 = new Book("Book3", author);
+        author.setBooks(List.of(book1, book2, book3));
+
+        authorRepo.save(author);
+
+        Author savedAuthor = authorRepo.findById(1).get();
+        List<Book> books = savedAuthor.getBooks();
+        System.out.println(books);
     }
 }

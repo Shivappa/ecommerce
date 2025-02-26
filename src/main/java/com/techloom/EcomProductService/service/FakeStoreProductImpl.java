@@ -1,6 +1,6 @@
 package com.techloom.EcomProductService.service;
 
-import com.techloom.EcomProductService.Exception.ProductNotFoudException;
+import com.techloom.EcomProductService.exception.ProductNotFoundException;
 import com.techloom.EcomProductService.client.FakeStoreAPIClient;
 import com.techloom.EcomProductService.dto.FakeStoreProductRequestDTO;
 import com.techloom.EcomProductService.dto.FakeStoreProductResponseDTO;
@@ -12,7 +12,7 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Service;
 
 // static imports the method and we can use the method name directly
-import static com.techloom.EcomProductService.mapper.ProductMapper.FakeStoreResponseToProductResponse;
+import static com.techloom.EcomProductService.mapper.ProductMapper.fakeProductResponseToProductResponse;
 import static com.techloom.EcomProductService.mapper.ProductMapper.productRequestToFakeStoreRequest;
 import static com.techloom.EcomProductService.util.ProductUtils.isNull;
 
@@ -36,19 +36,18 @@ public class FakeStoreProductImpl implements ProductService{
         ProductListResponseDTO productListResponseDTO = new ProductListResponseDTO();
         for(FakeStoreProductResponseDTO fakeStoreProductResponseDTO : productResponseArray) {
             productListResponseDTO.getProducts().add(
-                    FakeStoreResponseToProductResponse(fakeStoreProductResponseDTO));
+                    fakeProductResponseToProductResponse(fakeStoreProductResponseDTO));
         }
         return  productListResponseDTO;
     }
 
     @Override
-    public ProductResponseDTO getProductById(int id) throws ProductNotFoudException {
-        FakeStoreProductResponseDTO fakeStoreProductResponseDTO =
-                fakeStoreAPIClient.getProductById(id);
-        if (isNull(fakeStoreProductResponseDTO)){
-            throw new ProductNotFoudException("Product not found for id:"+id);
+    public ProductResponseDTO getProductById(int id) throws ProductNotFoundException {
+        FakeStoreProductResponseDTO fakeStoreProductResponseDTO = fakeStoreAPIClient.getProductById(id);
+        if(isNull(fakeStoreProductResponseDTO)){
+            throw new ProductNotFoundException("Product not found with id : " + id);
         }
-        return FakeStoreResponseToProductResponse(fakeStoreProductResponseDTO);
+        return fakeProductResponseToProductResponse(fakeStoreProductResponseDTO);
     }
 
     @Override
@@ -58,7 +57,7 @@ public class FakeStoreProductImpl implements ProductService{
         FakeStoreProductResponseDTO fakeStoreProductDTO =
                 fakeStoreAPIClient.createProduct(fakeStoreProductRequestDTO);
 
-        return FakeStoreResponseToProductResponse(fakeStoreProductDTO);
+        return fakeProductResponseToProductResponse(fakeStoreProductDTO);
     }
 
 
@@ -71,6 +70,16 @@ public class FakeStoreProductImpl implements ProductService{
 
     @Override
     public Product updateProductById(int id, Product updateProduct) {
+        return null;
+    }
+
+    @Override
+    public Product updateProduct(int id, Product updatedProduct) {
+        return null;
+    }
+
+    @Override
+    public ProductResponseDTO findProductByTitle(String title) {
         return null;
     }
 }
