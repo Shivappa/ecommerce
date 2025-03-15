@@ -30,3 +30,11 @@ Verify : it does not create/udpate anything, it just verifies if the DB has all 
 
 Local development -> create or update
 Production -> verify [ generally tables via separate scripts like FlyWay, Liquibase ]
+
+
+Fundamental APIs for auth are already given by Spring Security OAuth2
+1. /login
+2. /logout
+3. /signup
+4. /validate -> to validate the token from Resource Service to Auth Service
+5. /register -> registering a new client [ basically the service which will rely on Auth Service for authentication 
